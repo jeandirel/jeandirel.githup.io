@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeux des provinces et chefs-lieux du Gabon</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Connaissez-vous les provinces et les chefs-lieux du Gabon ?</h2>
+<p>Entrez le chef-lieu lorsque le nom de la province est affiché, et vice versa.</p>
+
+<div id="game-container">
+  <p id="question"></p>
+  <input type="text" id="answer" placeholder="Entrez votre réponse">
+  <button onclick="checkAnswer()">Vérifier</button>
+  <p id="result"></p>
+</div>
+
+<script>
+  const provincesAndCapitals = [
+    { province: 'Estuaire', capital: 'Libreville' },
+    { province: 'Haut-Ogooué', capital: 'Franceville' },
+    { province: 'Moyen-Ogooué', capital: 'Lambaréné' },
+    { province: 'Ngounié', capital: 'Mouila' },
+    { province: 'Nyanga', capital: 'Tchibanga' },
+    { province: 'Ogooué-Ivindo', capital: 'Makokou' },
+    { province: 'Ogooué-Lolo', capital: 'Koulamoutou' },
+    { province: 'Ogooué-Maritime', capital: 'Port-Gentil' },
+    { province: 'Woleu-Ntem', capital: 'Oyem' },
+  ];
+
+  let currentIndex = 0;
+
+  function displayQuestion() {
+    document.getElementById('question').textContent = `Chef-lieu de ${provincesAndCapitals[currentIndex].province} :`;
+  }
+
+  function checkAnswer() {
+  const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
+  const correctAnswer = provincesAndCapitals[currentIndex].capital.toLowerCase();
+
+  const resultElement = document.getElementById('result');
+  if (userAnswer === correctAnswer) {
+    resultElement.textContent = 'Bonne réponse !';
+  } else {
+    resultElement.textContent = `Mauvaise réponse. La réponse correcte est ${correctAnswer}.`;
+  }
+
+  // Réinitialisation du champ de réponse
+  document.getElementById('answer').value = '';
+
+  currentIndex++;
+
+  if (currentIndex < provincesAndCapitals.length) {
+    displayQuestion();
+  } else {
+    resultElement.textContent += '\nFin du jeu.';
+    document.getElementById('answer').setAttribute('disabled', true);
+  }
+}
+
+
+  // Initial display
+  displayQuestion();
+</script>
+
+</body>
+</html>
