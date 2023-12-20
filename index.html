@@ -59,11 +59,8 @@
 
     const resultElement = document.getElementById('result');
     if (userAnswer === '') {
-      alert('La réponse est obligatoire.');
-    } else {
-      alert('Bonne réponse !');
-      document.getElementById('answer').value = '';
-    }
+    alert('La réponse est obligatoire.');
+  } else {
     if (userAnswer === correctAnswer) {
       resultElement.textContent = 'Bonne réponse !';
     } else {
