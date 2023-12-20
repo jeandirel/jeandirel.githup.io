@@ -16,6 +16,11 @@
 
 <h2>Connaissez-vous les provinces et les chefs-lieux du Gabon ?</h2>
 <p>Entrez le chef-lieu lorsque le nom de la province est affiché, et vice versa.</p>
+<label for="selectType">Choisir le type d'entraînement :</label>
+<select id="selectType" onchange="changeTrainingType()">
+  <option value="provinces">Provinces</option>
+  <option value="capitals">Chefs-lieux</option>
+</select>
 
 <div id="game-container">
   <p id="question"></p>
@@ -38,37 +43,72 @@
   ];
 
   let currentIndex = 0;
+  let trainingType = 'provinces';
 
   function displayQuestion() {
-    document.getElementById('question').textContent = `Chef-lieu de ${provincesAndCapitals[currentIndex].province} :`;
+    if (trainingType === 'provinces') {
+      document.getElementById('question').textContent = `Chef-lieu de ${provincesAndCapitals[currentIndex].province} :`;
+    } else {
+      document.getElementById('question').textContent = `Province correspondante à ${provincesAndCapitals[currentIndex].capital} :`;
+    }
   }
 
   function checkAnswer() {
-  const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
-  const correctAnswer = provincesAndCapitals[currentIndex].capital.toLowerCase();
+    const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
+    const correctAnswer = (trainingType === 'provinces') ? provincesAndCapitals[currentIndex].capital.toLowerCase() : provincesAndCapitals[currentIndex].province.toLowerCase();
 
-  const resultElement = document.getElementById('result');
-  if (userAnswer === correctAnswer) {
-    resultElement.textContent = 'Bonne réponse !';
-  } else {
-    resultElement.textContent = `Mauvaise réponse. La réponse correcte est ${correctAnswer}.`;
-  }
+    const resultElement = document.getElementById('result');
+    if (userAnswer === correctAnswer) {
+      resultElement.textContent = 'Bonne réponse !';
+    } else {
+      resultElement.textContent = `Mauvaise réponse. La réponse correcte est ${correctAnswer}.`;
+    }
+    if (userAnswer === '') {
+      alert('La réponse est obligatoire.');
+    } else {
+      alert('Bonne réponse !');
+      document.getElementById('answer').value = '';
+    }
 
-  // Réinitialisation du champ de réponse
-  document.getElementById('answer').value = '';
+    // Réinitialisation du champ de réponse
+    document.getElementById('answer').value = '';
 
-  currentIndex++;
+    currentIndex++;
 
-  if (currentIndex < provincesAndCapitals.length) {
+    // Boucle le jeu si toutes les questions ont été posées
+    if (currentIndex >= provincesAndCapitals.length) {
+      currentIndex = 0;
+    }
+
     displayQuestion();
-  } else {
-    resultElement.textContent += '\nFin du jeu.';
-    document.getElementById('answer').setAttribute('disabled', true);
   }
-}
 
-  
+  function changeTrainingType() {
+    trainingType = document.getElementById('selectType').value;
+    initializeGame(trainingType);
+  }
 
+  function initializeGame(type) {
+    // Réinitialisez les variables et l'interface utilisateur en fonction du type d'entraînement
+    currentIndex = 0;
+    document.getElementById('result').textContent = '';
+    document.getElementById('answer').value = '';
+    document.getElementById('answer').removeAttribute('disabled');
+
+    // Mise à jour des données en fonction du type d'entraînement
+    if (type === 'provinces') {
+      provincesAndCapitals.forEach(item => {
+        item.question = `Chef-lieu de ${item.province} :`;
+      });
+    } else if (type === 'capitals') {
+      provincesAndCapitals.forEach(item => {
+        item.question = `Province correspondante à ${item.capital} :`;
+      });
+    }
+
+    // Affiche la première question
+    displayQuestion();
+  }
 
   // Initial display
   displayQuestion();
