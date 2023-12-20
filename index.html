@@ -58,17 +58,18 @@
     const correctAnswer = (trainingType === 'provinces') ? provincesAndCapitals[currentIndex].capital.toLowerCase() : provincesAndCapitals[currentIndex].province.toLowerCase();
 
     const resultElement = document.getElementById('result');
-    if (userAnswer === correctAnswer) {
-      resultElement.textContent = 'Bonne réponse !';
-    } else {
-      resultElement.textContent = `Mauvaise réponse. La réponse correcte est ${correctAnswer}.`;
-    }
     if (userAnswer === '') {
       alert('La réponse est obligatoire.');
     } else {
       alert('Bonne réponse !');
       document.getElementById('answer').value = '';
     }
+    if (userAnswer === correctAnswer) {
+      resultElement.textContent = 'Bonne réponse !';
+    } else {
+      resultElement.textContent = `Mauvaise réponse. La réponse correcte est ${correctAnswer}.`;
+    }
+    
 
     // Réinitialisation du champ de réponse
     document.getElementById('answer').value = '';
