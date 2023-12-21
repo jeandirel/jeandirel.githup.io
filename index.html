@@ -11,17 +11,97 @@
       padding: 20px;
     }
   </style>
+  <style>
+    body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  color: #333;
+}
+
+p {
+  color: #555;
+}
+
+#game-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 400px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+select {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: calc(300px); /* Réduire la largeur du select */
+  margin-bottom: 20px;
+  
+}
+
+
+input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  margin-bottom: 20px;
+  text-align: center; 
+}
+option {
+  text-align: center; 
+}
+
+button {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+  </style>
 </head>
 <body>
 
 <h2>Connaissez-vous les provinces et les chefs-lieux du Gabon ?</h2>
 <p>Entrez le chef-lieu lorsque le nom de la province est affiché, et vice versa.</p>
-<label for="selectType">Choisir le type d'entraînement :</label>
+<label for="selectType">Choisir le type d'entraînement (3):</label>
 <select id="selectType" onchange="changeTrainingType()">
-  <option value="provinces">Provinces</option>
-  <option value="capitals">Chefs-lieux</option>
+  <option value="provinces">Chefs-lieux</option>
+  <option value="capitals">Provinces</option>
+  <option value="numbers">Numérotation des provinces</option>
 </select>
-
+<div>
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAAY1BMVEX///8AersAmEb/7QD+7AAAeboAl0YAebsAl0X/7AD+7QDq5xLe3Tz2+fjk8OYAkBoAlEdmrjpXk6AAbaUAdL706RAooUYoiKsenzIWnUjq4xFdnJQAc8ElhqwAeL0chZwYgq9r5rx3AAACHUlEQVR4nO3d6W7CQAxG0QmUtfvCXpb3f8omk0qsSkkxsnX1nUpMhDCNscdDfzUlERERERERERERERGBegFJ81eMeZr2MaZlMkOInEwHgpcMhvZMUEomKt6ewVCbBcVLxrs9rGgARMWrjPfGtcKrjHevW+G1mfcnakXJRMWbZpWc2cHaP1g716z9toGtA/68NV6bed+EFd45g4GrjHevW+Elg4GrTL7o1ydpp2FtPJt9Ao4DcZXBKJMZen+iVobTtHjDWKR3kLR8xFimybgLMZ6kSXcM0a2SeYCokhl534SVUVWZEURuMwxcMt69boVXGe/zwQouGZ0zEWkARMWrjHevW+G1mfdItcI7ZzBwyXhvXCu8ynhvXCu8QxOD1mbe3WEHt2e828OKBkBUOmfCUpsFxWsz779DrPAqgwFLxrvTLaUnkLT6wFil3fcXxPcuzTYFxGamZGIqk1lvBhCsZNZlm/Ug8p7xvgkrtAEw4+wZXGW8b8KKkomKdWhWyXifD1Z4bdarapRza7vGCqBVBpZMPQuKwclaHK/nL7g5oHVg0RjAq8w/J2E4SiYq1teZNW0AeN+ElTqZXKSDx8uXjU9HeA9eZbynkBVkMmWR6ifO16JxvX/A9YH1nqmu8s9+rULq9Tf49AV3CbjtN+nQjIo2mmltVg+D/ePly8anI7yH2iyqss22nxjb9Azi/f+vRERERERERERERERC+QGa3lenVSBsqgAAAABJRU5ErkJggg==" alt="Drapeau du Gabon" style="width: 100px; height: 50px; margin-right: 10px;">
+</div>
 <div id="game-container">
   <p id="question"></p>
   <input type="text" id="answer" placeholder="Entrez votre réponse" required>
@@ -31,42 +111,64 @@
 
 <script>
   const provincesAndCapitals = [
-    { province: 'Estuaire', capital: 'Libreville' },
-    { province: 'Haut-Ogooué', capital: 'Franceville' },
-    { province: 'Moyen-Ogooué', capital: 'Lambaréné' },
-    { province: 'Ngounié', capital: 'Mouila' },
-    { province: 'Nyanga', capital: 'Tchibanga' },
-    { province: 'Ogooué-Ivindo', capital: 'Makokou' },
-    { province: 'Ogooué-Lolo', capital: 'Koulamoutou' },
-    { province: 'Ogooué-Maritime', capital: 'Port-Gentil' },
-    { province: 'Woleu-Ntem', capital: 'Oyem' },
-  ];
+  { number: 'G1', province: 'Estuaire', capital: 'Akanda' },
+  { number: 'G2', province: 'Haut-Ogooué', capital: 'Franceville' },
+  { number: 'G3', province: 'Moyen-Ogooué', capital: 'Lambaréné' },
+  { number: 'G4', province: 'Ngounié', capital: 'Mouila' },
+  { number: 'G5', province: 'Nyanga', capital: 'Tchibanga' },
+  { number: 'G6', province: 'Ogooué-Ivindo', capital: 'Makokou' },
+  { number: 'G7', province: 'Ogooué-Lolo', capital: 'Koulamoutou' },
+  { number: 'G8', province: 'Ogooué-Maritime', capital: 'Port-Gentil' },
+  { number: 'G9', province: 'Woleu-Ntem', capital: 'Oyem' },
+];
+
+// Fonction pour mélanger le tableau des questions
+function shuffleQuestions(provincesAndCapitals) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
 
   let currentIndex = 0;
   let trainingType = 'provinces';
+  let score = 0;
 
   function displayQuestion() {
-    if (trainingType === 'provinces') {
-      document.getElementById('question').textContent = `Chef-lieu de ${provincesAndCapitals[currentIndex].province} :`;
-    } else {
-      document.getElementById('question').textContent = `Province correspondante à ${provincesAndCapitals[currentIndex].capital} :`;
-    }
+  const questionElement = document.getElementById('question');
+
+  if (trainingType === 'provinces') {
+    questionElement.textContent = `Chef-lieu de ${provincesAndCapitals[currentIndex].province} :`;
+  } else if (trainingType === 'capitals') {
+    questionElement.textContent = `Province correspondante à ${provincesAndCapitals[currentIndex].capital} :`;
+  } else if (trainingType === 'numbers') {
+    questionElement.textContent = `${provincesAndCapitals[currentIndex].province} a pour numéro de province :`;
   }
+}
 
-  function checkAnswer() {
-    const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
-    const correctAnswer = (trainingType === 'provinces') ? provincesAndCapitals[currentIndex].capital.toLowerCase() : provincesAndCapitals[currentIndex].province.toLowerCase();
 
-    const resultElement = document.getElementById('result');
-    if (userAnswer === '') {
+
+
+
+function checkAnswer() {
+  const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
+  const correctAnswer = (trainingType === 'provinces') ? provincesAndCapitals[currentIndex].capital.toLowerCase() : (trainingType === 'numbers') ? provincesAndCapitals[currentIndex].number.toLowerCase() : provincesAndCapitals[currentIndex].province.toLowerCase();
+
+  const resultElement = document.getElementById('result');
+
+  if (userAnswer === '') {
     alert('La réponse est obligatoire.');
   } else {
     if (userAnswer === correctAnswer) {
       resultElement.textContent = 'Bonne réponse !';
+      score++;
     } else {
-      resultElement.textContent = `Mauvaise réponse. La réponse correcte est ${correctAnswer}.`;
-    }}
-    
+      resultElement.textContent = `Mauvaise réponse. La réponse correcte est ${provincesAndCapitals[currentIndex].capital}.`;
+    }
+
+    // Affiche le score actuel
+    resultElement.textContent += ` Score : ${score} sur ${currentIndex + 1} tentatives`;
 
     // Réinitialisation du champ de réponse
     document.getElementById('answer').value = '';
@@ -76,10 +178,16 @@
     // Boucle le jeu si toutes les questions ont été posées
     if (currentIndex >= provincesAndCapitals.length) {
       currentIndex = 0;
+      // Mélangez le tableau des questions avant de commencer une nouvelle série
+      shuffleQuestions(provincesAndCapitals);
     }
 
     displayQuestion();
   }
+}
+
+
+
 
   function changeTrainingType() {
     trainingType = document.getElementById('selectType').value;
@@ -87,26 +195,35 @@
   }
 
   function initializeGame(type) {
-    // Réinitialisez les variables et l'interface utilisateur en fonction du type d'entraînement
-    currentIndex = 0;
-    document.getElementById('result').textContent = '';
-    document.getElementById('answer').value = '';
-    document.getElementById('answer').removeAttribute('disabled');
+  // Réinitialisez les variables et l'interface utilisateur en fonction du type d'entraînement
+  currentIndex = 0;
+  document.getElementById('result').textContent = '';
+  document.getElementById('answer').value = '';
+  document.getElementById('answer').removeAttribute('disabled');
 
-    // Mise à jour des données en fonction du type d'entraînement
-    if (type === 'provinces') {
-      provincesAndCapitals.forEach(item => {
-        item.question = `Chef-lieu de ${item.province} :`;
-      });
-    } else if (type === 'capitals') {
-      provincesAndCapitals.forEach(item => {
-        item.question = `Province correspondante à ${item.capital} :`;
-      });
-    }
+  // Actualisez la variable trainingType
+  trainingType = type;
 
-    // Affiche la première question
-    displayQuestion();
+  // Mise à jour des données en fonction du type d'entraînement
+  if (type === 'provinces') {
+    provincesAndCapitals.forEach(item => {
+      item.question = `Chef-lieu de ${item.province} :`;
+    });
+  } else if (type === 'capitals') {
+    provincesAndCapitals.forEach(item => {
+      item.question = `Province correspondante à ${item.capital} :`;
+    });
+  } else if (type === 'numbers') {
+    provincesAndCapitals.forEach(item => {
+      item.question = `Saisissez le numéro de la province correspondante à ${item.capital} :`;
+    });
   }
+
+  // Affiche la première question
+  displayQuestion();
+}
+
+
 
   // Initial display
   displayQuestion();
